@@ -1,9 +1,11 @@
 import React, {useEffect, FunctionComponent, useState} from 'react';
-import {StyleSheet, Image, View, Text} from 'react-native';
+import {StyleSheet, Image, View, Text, Button} from 'react-native';
 import {fetchMemories, Memory} from '../api';
+import {useNavigation} from '@react-navigation/native';
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
+  const navigation = useNavigation();
 
   const getMemoriesList = () => {
     fetchMemories().then((response) => {
@@ -23,6 +25,12 @@ const Home: FunctionComponent = () => {
 
   return (
     <View>
+      <Button
+        title="Add Memory"
+        onPress={() => {
+          navigation.navigate('AddMemory');
+        }}
+      />
       {memories.map((memory, idx) => {
         return (
           <View key={idx}>
