@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, ReactNode, useState } from "react"
 import {
   TouchableOpacity,
   StyleSheet,
@@ -40,6 +40,10 @@ const AddMemory: FunctionComponent = () => {
     })
   }
 
+  const toImageView = (image: string, index: number): ReactNode => {
+    return <Image source={{ uri: image }} key={index} style={style.image} />
+  }
+
   const isDisabled = description === "" || imagesData.length === 0
 
   const submitButtonDisabledStyle = isDisabled
@@ -58,9 +62,7 @@ const AddMemory: FunctionComponent = () => {
         value={description}
         onChangeText={setDescription}
       />
-      {imagesData.map((image, index) => {
-        return <Image source={{ uri: image }} key={index} style={style.image} />
-      })}
+      {imagesData.map(toImageView)}
       <Button title="Add an image" onPress={handleOnPressGetImage} />
       <TouchableOpacity
         style={submitButtonStyle}

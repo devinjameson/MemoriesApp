@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useState, useCallback } from "react"
+import React, {
+  FunctionComponent,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react"
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,6 +11,7 @@ import {
   View,
   Text,
   SafeAreaView,
+  ScrollView,
 } from "react-native"
 import { useNavigation, useFocusEffect } from "@react-navigation/native"
 import { SvgXml } from "react-native-svg"
@@ -26,9 +32,7 @@ const Home: FunctionComponent = () => {
 
   const getMemoriesList = () => {
     fetchMemories().then((response) => {
-      if (response) {
-        setMemories(response)
-      }
+      response && setMemories(response)
     })
   }
 
@@ -38,25 +42,27 @@ const Home: FunctionComponent = () => {
     }, []),
   )
 
-  const hasImages = (memory: Memory): boolean => {
-    return memory.images.length > 0
+  const toMemoryView = (memory: Memory, index: number): ReactNode => {
+    const hasImages = (memory: Memory): boolean => {
+      return memory.images.length > 0
+    }
+
+    return (
+      <View key={index}>
+        <Text>{memory.description}</Text>
+        {hasImages(memory) && (
+          <Image source={{ uri: memory.images[0] }} style={style.image} />
+        )}
+      </View>
+    )
   }
 
   return (
     <SafeAreaView style={style.outerContainer}>
-      <View style={style.container}>
+      <ScrollView contentContainerStyle={style.contentContainer}>
         <Text style={style.headerText}>Home</Text>
-        {memories.map((memory, idx) => {
-          return (
-            <View key={idx}>
-              <Text>{memory.description}</Text>
-              {hasImages(memory) && (
-                <Image source={{ uri: memory.images[0] }} style={style.image} />
-              )}
-            </View>
-          )
-        })}
-      </View>
+        {memories.map(toMemoryView)}
+      </ScrollView>
       <TouchableOpacity
         style={style.addMemoryButton}
         onPress={handleOnPressAddMemory}
@@ -77,7 +83,7 @@ const style = StyleSheet.create({
   outerContainer: {
     flex: 1,
   },
-  container: {
+  contentContainer: {
     paddingVertical: Sizing.layout.large,
     paddingHorizontal: Sizing.layout.large,
   },
