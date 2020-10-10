@@ -13,8 +13,7 @@
     "prettier",
     "react",
     "react-hooks",
-    "react-native",
-    "detox"
+    "react-native"
   ],
   "settings": {
     "import/parsers": {
@@ -39,10 +38,7 @@
     "react-native/react-native": true,
     "commonjs": true,
     "es6": true,
-    "detox/detox": true,
     "node": true,
-    "jest": true,
-    "jest/globals": true,
     "mocha": true
   },
   "ignorePatterns": ["android/**", "ios/**"],
@@ -59,7 +55,7 @@
     "no-unreachable": 2,
     "no-unused-vars": [2, { "argsIgnorePattern": "^_" }],
     "no-useless-escape": 2,
-    "no-console": 0,
+    "no-console": 2,
     "no-var": 2,
     "strict": [2, "global"],
     "react-native/no-color-literals": 1,

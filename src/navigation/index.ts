@@ -1,6 +1,6 @@
-export type Screen = 'Home' | 'AddMemory';
+export type Screen = "Home" | "AddMemory"
 
 export const Screens: Record<Screen, Screen> = {
-  Home: 'Home',
-  AddMemory: 'AddMemory',
-};
+  Home: "Home",
+  AddMemory: "AddMemory",
+}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from "react";
+import React, { FunctionComponent, useState, useCallback } from "react"
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,41 +6,41 @@ import {
   View,
   Text,
   SafeAreaView,
-} from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { SvgXml } from "react-native-svg";
+} from "react-native"
+import { useNavigation, useFocusEffect } from "@react-navigation/native"
+import { SvgXml } from "react-native-svg"
 
-import { fetchMemories, Memory } from "../api";
-import { Screens } from "../navigation";
+import { fetchMemories, Memory } from "../api"
+import { Screens } from "../navigation"
 
-import { Icons } from "../assets/svg";
-import { Colors, Sizing, Typography, Buttons } from "../styles";
+import { Icons } from "../assets/svg"
+import { Colors, Sizing, Typography, Buttons } from "../styles"
 
 const Home: FunctionComponent = () => {
-  const [memories, setMemories] = useState<Memory[]>([]);
-  const navigation = useNavigation();
+  const [memories, setMemories] = useState<Memory[]>([])
+  const navigation = useNavigation()
 
   const handleOnPressAddMemory = () => {
-    navigation.navigate(Screens.AddMemory);
-  };
+    navigation.navigate(Screens.AddMemory)
+  }
 
   const getMemoriesList = () => {
     fetchMemories().then((response) => {
       if (response) {
-        setMemories(response);
+        setMemories(response)
       }
-    });
-  };
+    })
+  }
 
   useFocusEffect(
     useCallback(() => {
-      getMemoriesList();
-    }, [])
-  );
+      getMemoriesList()
+    }, []),
+  )
 
   const hasImages = (memory: Memory): boolean => {
-    return memory.images.length > 0;
-  };
+    return memory.images.length > 0
+  }
 
   return (
     <SafeAreaView style={style.outerContainer}>
@@ -54,7 +54,7 @@ const Home: FunctionComponent = () => {
                 <Image source={{ uri: memory.images[0] }} style={style.image} />
               )}
             </View>
-          );
+          )
         })}
       </View>
       <TouchableOpacity
@@ -70,8 +70,8 @@ const Home: FunctionComponent = () => {
         />
       </TouchableOpacity>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const style = StyleSheet.create({
   outerContainer: {
@@ -93,6 +93,6 @@ const style = StyleSheet.create({
   addMemoryButton: {
     ...Buttons.floating.primary,
   },
-});
+})
 
-export default Home;
+export default Home

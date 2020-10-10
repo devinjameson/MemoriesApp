@@ -1,21 +1,23 @@
-import React, {FunctionComponent} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, StyleSheet} from 'react-native';
-import {SvgXml} from 'react-native-svg';
+import React, { FunctionComponent, ReactNode } from "react"
+import { useNavigation } from "@react-navigation/native"
+import { TouchableOpacity, StyleSheet } from "react-native"
+import { SvgXml } from "react-native-svg"
 
-import {Icons} from '../assets/svg';
-import {Colors, Sizing} from '../styles';
+import { Icons } from "../assets/svg"
+import { Colors, Sizing } from "../styles"
 
 export const applyHeaderRightBack = () => {
-  return () => <HeaderRightBack />;
-};
+  return function headerRightBack(): ReactNode {
+    return <HeaderRightBack />
+  }
+}
 
 const HeaderRightBack: FunctionComponent = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const handleOnPressGoBack = () => {
-    navigation.goBack();
-  };
+    navigation.goBack()
+  }
 
   return (
     <TouchableOpacity onPress={handleOnPressGoBack} style={style.container}>
@@ -26,11 +28,11 @@ const HeaderRightBack: FunctionComponent = () => {
         height={Sizing.icons.medium}
       />
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const style = StyleSheet.create({
   container: {
     padding: Sizing.layout.large,
   },
-});
+})

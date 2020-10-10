@@ -81,8 +81,8 @@ const AddMemory: FunctionComponent = () => {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    flexGrow: 1,
+    flex: 1,
+    backgroundColor: Colors.neutral.white,
   },
   image: {
     width: "97%",
