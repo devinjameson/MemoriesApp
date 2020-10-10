@@ -5,5 +5,10 @@ export const primary: Record<string, string> = {
 };
 
 export const neutral: Record<string, string> = {
+  black: iOSColors.black,
   white: iOSColors.white,
+};
+
+export const utility: Record<string, string> = {
+  transparent: 'transparent',
 };
