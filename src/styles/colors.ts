@@ -1,14 +1,18 @@
-import {iOSColors} from 'react-native-typography';
+import { iOSColors } from "react-native-typography"
 
-export const primary: Record<string, string> = {
+type Primary = "blue"
+export const primary: Record<Primary, string> = {
   blue: iOSColors.blue,
-};
+}
 
-export const neutral: Record<string, string> = {
-  black: iOSColors.black,
+type Neutral = "white" | "s80" | "black"
+export const neutral: Record<Neutral, string> = {
   white: iOSColors.white,
-};
+  s80: iOSColors.lightGray2,
+  black: iOSColors.black,
+}
 
-export const utility: Record<string, string> = {
-  transparent: 'transparent',
-};
+type Utility = "transparent"
+export const utility: Record<Utility, string> = {
+  transparent: "transparent",
+}

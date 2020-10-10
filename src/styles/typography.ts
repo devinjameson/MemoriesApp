@@ -1,14 +1,16 @@
-import {TextStyle} from 'react-native';
-import {systemWeights} from 'react-native-typography';
+import { TextStyle } from "react-native"
+import { systemWeights } from "react-native-typography"
 
-export const fontSize: Record<string, TextStyle> = {
+type FontSize = "xLarge"
+export const fontSize: Record<FontSize, TextStyle> = {
   xLarge: {
     fontSize: 32,
   },
-};
+}
 
-export const fontWeight: Record<string, TextStyle> = {
+type FontWeight = "bold"
+export const fontWeight: Record<FontWeight, TextStyle> = {
   bold: {
     ...systemWeights.bold,
   },
-};
+}

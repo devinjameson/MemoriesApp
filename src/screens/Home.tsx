@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, useCallback} from 'react';
+import React, { FunctionComponent, useState, useCallback } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,15 +6,15 @@ import {
   View,
   Text,
   SafeAreaView,
-} from 'react-native';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {SvgXml} from 'react-native-svg';
+} from "react-native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { SvgXml } from "react-native-svg";
 
-import {fetchMemories, Memory} from '../api';
-import {Screens} from '../navigation';
+import { fetchMemories, Memory } from "../api";
+import { Screens } from "../navigation";
 
-import {Icons} from '../assets/svg';
-import {Colors, Sizing, Typography, Outlines} from '../styles';
+import { Icons } from "../assets/svg";
+import { Colors, Sizing, Typography, Buttons } from "../styles";
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
@@ -35,7 +35,7 @@ const Home: FunctionComponent = () => {
   useFocusEffect(
     useCallback(() => {
       getMemoriesList();
-    }, []),
+    }, [])
   );
 
   const hasImages = (memory: Memory): boolean => {
@@ -51,7 +51,7 @@ const Home: FunctionComponent = () => {
             <View key={idx}>
               <Text>{memory.description}</Text>
               {hasImages(memory) && (
-                <Image source={{uri: memory.images[0]}} style={style.image} />
+                <Image source={{ uri: memory.images[0] }} style={style.image} />
               )}
             </View>
           );
@@ -60,7 +60,8 @@ const Home: FunctionComponent = () => {
       <TouchableOpacity
         style={style.addMemoryButton}
         onPress={handleOnPressAddMemory}
-        accessibilityLabel="Add a memory">
+        accessibilityLabel="Add a memory"
+      >
         <SvgXml
           xml={Icons.Plus}
           fill={Colors.neutral.white}
@@ -85,20 +86,12 @@ const style = StyleSheet.create({
     ...Typography.fontWeight.bold,
   },
   image: {
-    width: '97%',
+    width: "97%",
     height: 200,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   addMemoryButton: {
-    height: Sizing.layout.xxxLarge,
-    width: Sizing.layout.xxxLarge,
-    position: 'absolute',
-    bottom: Sizing.layout.xxLarge,
-    right: Sizing.layout.large,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.primary.blue,
-    borderRadius: Outlines.borderRadius.max,
+    ...Buttons.floating.primary,
   },
 });
 

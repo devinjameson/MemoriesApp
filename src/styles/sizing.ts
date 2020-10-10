@@ -1,11 +1,13 @@
-export const layout: Record<string, number> = {
+type Layout = "medium" | "large" | "xLarge" | "xxLarge" | "xxxLarge"
+export const layout: Record<Layout, number> = {
   medium: 20,
   large: 30,
   xLarge: 40,
   xxLarge: 50,
   xxxLarge: 60,
-};
+}
 
-export const icons: Record<string, number> = {
+type Icons = "medium"
+export const icons: Record<Icons, number> = {
   medium: 20,
-};
+}
