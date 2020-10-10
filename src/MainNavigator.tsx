@@ -14,7 +14,11 @@ const MainNavigator: FunctionComponent = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name={Screens.Home} component={Home} />
+        <Stack.Screen
+          name={Screens.Home}
+          component={Home}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name={Screens.AddMemory}
           component={AddMemory}

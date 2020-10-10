@@ -1,7 +1,17 @@
 import React, {FunctionComponent, useState, useCallback} from 'react';
-import {StyleSheet, Image, View, Text, Button} from 'react-native';
-import {fetchMemories, Memory} from '../api';
+import {
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
+
+import {fetchMemories, Memory} from '../api';
+
+import {Spacing, Typography} from './styles';
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
@@ -26,28 +36,39 @@ const Home: FunctionComponent = () => {
   };
 
   return (
-    <View>
-      <Button
-        title="Add Memory"
-        onPress={() => {
-          navigation.navigate('AddMemory');
-        }}
-      />
-      {memories.map((memory, idx) => {
-        return (
-          <View key={idx}>
-            <Text>{memory.description}</Text>
-            {hasImages(memory) && (
-              <Image source={{uri: memory.images[0]}} style={style.image} />
-            )}
-          </View>
-        );
-      })}
-    </View>
+    <SafeAreaView>
+      <View style={style.container}>
+        <Text style={style.headerText}>Home</Text>
+        <Button
+          title="Add Memory"
+          onPress={() => {
+            navigation.navigate('AddMemory');
+          }}
+        />
+        {memories.map((memory, idx) => {
+          return (
+            <View key={idx}>
+              <Text>{memory.description}</Text>
+              {hasImages(memory) && (
+                <Image source={{uri: memory.images[0]}} style={style.image} />
+              )}
+            </View>
+          );
+        })}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const style = StyleSheet.create({
+  container: {
+    paddingVertical: Spacing.size.large,
+    paddingHorizontal: Spacing.size.large,
+  },
+  headerText: {
+    ...Typography.fontSize.xLarge,
+    ...Typography.fontWeight.bold,
+  },
   image: {
     width: '97%',
     height: 200,
