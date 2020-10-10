@@ -1,7 +1,7 @@
-import React, {useEffect, FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState, useCallback} from 'react';
 import {StyleSheet, Image, View, Text, Button} from 'react-native';
 import {fetchMemories, Memory} from '../api';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
@@ -15,9 +15,11 @@ const Home: FunctionComponent = () => {
     });
   };
 
-  useEffect(() => {
-    getMemoriesList();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getMemoriesList();
+    }, []),
+  );
 
   const hasImages = (memory: Memory): boolean => {
     return memory.images.length > 0;
