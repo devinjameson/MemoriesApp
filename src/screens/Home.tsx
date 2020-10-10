@@ -1,21 +1,28 @@
 import React, {FunctionComponent, useState, useCallback} from 'react';
 import {
+  TouchableOpacity,
   StyleSheet,
   Image,
   View,
   Text,
-  Button,
   SafeAreaView,
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {SvgXml} from 'react-native-svg';
 
 import {fetchMemories, Memory} from '../api';
+import {Screens} from '../navigation';
 
-import {Spacing, Typography} from './styles';
+import {Icons} from '../assets/svg';
+import {Colors, Sizing, Typography, Outlines} from '../styles';
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([]);
   const navigation = useNavigation();
+
+  const handleOnPressAddMemory = () => {
+    navigation.navigate(Screens.AddMemory);
+  };
 
   const getMemoriesList = () => {
     fetchMemories().then((response) => {
@@ -36,15 +43,9 @@ const Home: FunctionComponent = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={style.outerContainer}>
       <View style={style.container}>
         <Text style={style.headerText}>Home</Text>
-        <Button
-          title="Add Memory"
-          onPress={() => {
-            navigation.navigate('AddMemory');
-          }}
-        />
         {memories.map((memory, idx) => {
           return (
             <View key={idx}>
@@ -56,14 +57,28 @@ const Home: FunctionComponent = () => {
           );
         })}
       </View>
+      <TouchableOpacity
+        style={style.addMemoryButton}
+        onPress={handleOnPressAddMemory}
+        accessibilityLabel="Add a memory">
+        <SvgXml
+          xml={Icons.Plus}
+          fill={Colors.neutral.white}
+          width={Sizing.icons.medium}
+          height={Sizing.icons.medium}
+        />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const style = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
   container: {
-    paddingVertical: Spacing.size.large,
-    paddingHorizontal: Spacing.size.large,
+    paddingVertical: Sizing.layout.large,
+    paddingHorizontal: Sizing.layout.large,
   },
   headerText: {
     ...Typography.fontSize.xLarge,
@@ -73,6 +88,17 @@ const style = StyleSheet.create({
     width: '97%',
     height: 200,
     resizeMode: 'contain',
+  },
+  addMemoryButton: {
+    height: Sizing.layout.xxxLarge,
+    width: Sizing.layout.xxxLarge,
+    position: 'absolute',
+    bottom: Sizing.layout.xxLarge,
+    right: Sizing.layout.large,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary.blue,
+    borderRadius: Outlines.borderRadius.max,
   },
 });
 
