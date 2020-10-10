@@ -1,8 +1,11 @@
 import React, {FunctionComponent, useState} from 'react';
 import {StyleSheet, View, TextInput, Button, Image} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import {createMemory} from '../api';
+import {useNavigation} from '@react-navigation/native';
 
 const AddMemory: FunctionComponent = () => {
+  const navigation = useNavigation();
   const [description, setDescription] = useState<string>('');
   const [imagesData, setImagesData] = useState<string[]>([]);
 
@@ -30,7 +33,14 @@ const AddMemory: FunctionComponent = () => {
         return <Image source={{uri: image}} key={index} style={style.image} />;
       })}
       <Button title="Add an image" onPress={handleGetImage} />
-      <Button title="Add Memory" onPress={() => {}} />
+      <Button
+        title="Add Memory"
+        onPress={() => {
+          createMemory(description, imagesData).then(() => {
+            navigation.goBack();
+          });
+        }}
+      />
     </View>
   );
 };
