@@ -1,3 +1,12 @@
+import { Dimensions } from "react-native"
+
+const { height: screenHeight, width: screenWidth } = Dimensions.get("screen")
+type Screen = "width" | "height"
+export const screen: Record<Screen, number> = {
+  width: screenWidth,
+  height: screenHeight,
+}
+
 type Layout = "medium" | "large" | "xLarge" | "xxLarge" | "xxxLarge"
 export const layout: Record<Layout, number> = {
   medium: 20,

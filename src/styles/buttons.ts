@@ -16,5 +16,7 @@ export const floating: Record<Floating, ViewStyle> = {
     justifyContent: "center",
     backgroundColor: Colors.primary.blue,
     borderRadius: Outlines.borderRadius.max,
+    borderWidth: Outlines.borderWidth.base,
+    borderColor: Colors.neutral.white,
   },
 }

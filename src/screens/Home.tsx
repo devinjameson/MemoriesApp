@@ -20,7 +20,7 @@ import { fetchMemories, Memory } from "../api"
 import { Screens } from "../navigation"
 
 import { Icons } from "../assets/svg"
-import { Colors, Sizing, Typography, Buttons } from "../styles"
+import { Colors, Sizing, Typography, Buttons, Outlines } from "../styles"
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([])
@@ -32,7 +32,9 @@ const Home: FunctionComponent = () => {
 
   const getMemoriesList = () => {
     fetchMemories().then((response) => {
-      response && setMemories(response)
+      if (response) {
+        setMemories(response.reverse())
+      }
     })
   }
 
@@ -49,10 +51,10 @@ const Home: FunctionComponent = () => {
 
     return (
       <View key={index}>
-        <Text>{memory.description}</Text>
         {hasImages(memory) && (
           <Image source={{ uri: memory.images[0] }} style={style.image} />
         )}
+        <Text style={style.descriptionText}>{memory.description}</Text>
       </View>
     )
   }
@@ -79,22 +81,35 @@ const Home: FunctionComponent = () => {
   )
 }
 
+const outerMargin = Sizing.layout.medium
+const outerMarginsWidth = outerMargin * 2
+const imageWidth = Sizing.screen.width - outerMarginsWidth
+
 const style = StyleSheet.create({
   outerContainer: {
     flex: 1,
   },
   contentContainer: {
     paddingVertical: Sizing.layout.large,
-    paddingHorizontal: Sizing.layout.large,
+    paddingHorizontal: Sizing.layout.medium,
   },
   headerText: {
     ...Typography.fontSize.xLarge,
     ...Typography.fontWeight.bold,
+    marginBottom: Sizing.layout.medium,
+    color: Colors.neutral.black,
   },
   image: {
-    width: "97%",
-    height: 200,
-    resizeMode: "contain",
+    width: imageWidth,
+    height: imageWidth,
+    resizeMode: "cover",
+    borderRadius: Outlines.borderRadius.base,
+    marginBottom: Sizing.layout.medium,
+  },
+  descriptionText: {
+    ...Typography.fontSize.medium,
+    color: Colors.neutral.black,
+    marginBottom: Sizing.layout.medium,
   },
   addMemoryButton: {
     ...Buttons.floating.primary,

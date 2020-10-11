@@ -5,10 +5,11 @@ export const primary: Record<Primary, string> = {
   blue: iOSColors.blue,
 }
 
-type Neutral = "white" | "s80" | "black"
+type Neutral = "white" | "s80" | "s200" | "black"
 export const neutral: Record<Neutral, string> = {
   white: iOSColors.white,
   s80: iOSColors.lightGray2,
+  s200: iOSColors.gray,
   black: iOSColors.black,
 }
 
