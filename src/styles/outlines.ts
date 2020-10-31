@@ -4,7 +4,8 @@ export const borderRadius: Record<BorderRadius, number> = {
   max: 9999,
 }
 
-type BorderWidth = "base"
+type BorderWidth = "thin" | "base"
 export const borderWidth: Record<BorderWidth, number> = {
+  thin: 1,
   base: 2,
 }

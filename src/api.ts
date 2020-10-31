@@ -6,6 +6,11 @@ export type Memory = {
   updated_at: string
 }
 
+export type ImageData = {
+  image: string
+  id: number
+}
+
 const fetchMemories = async (): Promise<Memory[] | void> => {
   return fetch("http://localhost:3000/api/memories")
     .then((response) => response.json())
@@ -14,10 +19,10 @@ const fetchMemories = async (): Promise<Memory[] | void> => {
 
 const createMemory = async (
   description: string,
-  images: string[],
+  imagesData: ImageData[],
 ): Promise<Memory[] | void> => {
-  const imageData = images.map((image) => {
-    return { data: image }
+  const imageData = imagesData.map((imageData) => {
+    return { data: imageData.image }
   })
   const body = JSON.stringify({ memory: { description, images: imageData } })
 
