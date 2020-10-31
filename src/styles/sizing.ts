@@ -16,7 +16,9 @@ export const layout: Record<Layout, number> = {
   xxxLarge: 60,
 }
 
-type Icons = "medium"
+type Icons = "medium" | "large" | "xLarge"
 export const icons: Record<Icons, number> = {
   medium: 20,
+  large: 30,
+  xLarge: 40,
 }
