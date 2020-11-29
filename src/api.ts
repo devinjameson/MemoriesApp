@@ -11,6 +11,38 @@ export type ImageData = {
   id: number
 }
 
+export type SignInResponse = SignInSuccess | SignInFailure
+
+export type SignInSuccess = {
+  kind: "success"
+  authentication_token: string
+}
+
+export type SignInFailure = {
+  kind: "failure"
+  error: string
+}
+
+const signIn = async (phoneNumber: string): Promise<SignInResponse> => {
+  const body = JSON.stringify({ user: { phone_number: phoneNumber } })
+
+  return fetch("http://localhost:3000/api/users", {
+    method: "POST",
+    body,
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return {
+        kind: "success" as const,
+        authentication_token: data.authentication_token,
+      }
+    })
+    .catch(() => {
+      return { kind: "failure" as const, error: "Something went wrong" }
+    })
+}
+
 const fetchMemories = async (): Promise<Memory[] | void> => {
   return fetch("http://localhost:3000/api/memories")
     .then((response) => response.json())
@@ -35,4 +67,4 @@ const createMemory = async (
     .then((data) => data)
 }
 
-export { fetchMemories, createMemory }
+export { signIn, fetchMemories, createMemory }
