@@ -11,22 +11,38 @@ export type ImageData = {
   id: number
 }
 
-export type SignInResponse = SignInSuccess | SignInFailure
+export type RequestPinResponse = RequestPinSuccess | RequestPinFailure
 
-export type SignInSuccess = {
+export type RequestPinSuccess = {
   kind: "success"
-  authentication_token: string
 }
 
-export type SignInFailure = {
+export type RequestPinFailure = {
   kind: "failure"
   error: string
 }
 
-const signIn = async (phoneNumber: string): Promise<SignInResponse> => {
-  const body = JSON.stringify({ user: { phone_number: phoneNumber } })
+export type AuthenticationResponse =
+  | AuthenticationSuccess
+  | AuthenticationFailure
 
-  return fetch("http://localhost:3000/api/users", {
+export type AuthenticationSuccess = {
+  kind: "success"
+  authenticationToken: string
+}
+
+export type AuthenticationFailure = {
+  kind: "failure"
+  error: string
+}
+
+const authenticate = async (
+  phoneNumber: string,
+  pin: string,
+): Promise<AuthenticationResponse> => {
+  const body = JSON.stringify({ phone_number: phoneNumber, pin: pin })
+
+  return fetch("http://localhost:3000/api/session", {
     method: "POST",
     body,
     headers: { "Content-Type": "application/json" },
@@ -34,8 +50,8 @@ const signIn = async (phoneNumber: string): Promise<SignInResponse> => {
     .then((response) => response.json())
     .then((data) => {
       return {
+        authenticationToken: data.authentication_token,
         kind: "success" as const,
-        authentication_token: data.authentication_token,
       }
     })
     .catch(() => {
@@ -43,8 +59,32 @@ const signIn = async (phoneNumber: string): Promise<SignInResponse> => {
     })
 }
 
-const fetchMemories = async (): Promise<Memory[] | void> => {
-  return fetch("http://localhost:3000/api/memories")
+const requestPin = async (phoneNumber: string): Promise<RequestPinResponse> => {
+  const body = JSON.stringify({ user: { phone_number: phoneNumber } })
+
+  return fetch("http://localhost:3000/api/users", {
+    method: "POST",
+    body,
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return { kind: "success" as const }
+      } else {
+        return { kind: "failure" as const, error: "Something went wrong" }
+      }
+    })
+    .catch(() => {
+      return { kind: "failure" as const, error: "Something went wrong" }
+    })
+}
+
+const fetchMemories = async (
+  authenticationToken: string,
+): Promise<Memory[] | void> => {
+  const authHeader = { Authorization: authenticationToken }
+
+  return fetch("http://localhost:3000/api/memories", { headers: authHeader })
     .then((response) => response.json())
     .then((data) => data)
 }
@@ -52,19 +92,25 @@ const fetchMemories = async (): Promise<Memory[] | void> => {
 const createMemory = async (
   description: string,
   imagesData: ImageData[],
+  authenticationToken: string,
 ): Promise<Memory[] | void> => {
   const imageData = imagesData.map((imageData) => {
     return { data: imageData.image }
   })
   const body = JSON.stringify({ memory: { description, images: imageData } })
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: authenticationToken,
+  }
+
   return fetch("http://localhost:3000/api/memories", {
     method: "POST",
     body,
-    headers: { "Content-Type": "application/json" },
+    headers,
   })
     .then((response) => response.json())
     .then((data) => data)
 }
 
-export { signIn, fetchMemories, createMemory }
+export { authenticate, requestPin, fetchMemories, createMemory }

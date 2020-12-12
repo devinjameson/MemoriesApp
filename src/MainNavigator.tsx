@@ -7,14 +7,20 @@ import {
 
 import Home from "./screens/Home"
 import AddMemory from "./screens/AddMemory"
-import SignIn from "./screens/SignIn"
+import RequestPin from "./screens/RequestPin"
+import EnterPin from "./screens/EnterPin"
 import { Screen, Screens } from "./navigation"
 import { applyHeaderRightBack } from "./navigation/HeaderRightBack"
 
 import { Colors } from "./styles"
 import { useAuthenticationContext } from "./AuthenticationContext"
 
-type ScreenParams = Record<Screen, undefined>
+export type ScreenParams = {
+  Home: undefined
+  AddMemory: undefined
+  RequestPin: undefined
+  EnterPin: { phoneNumber: string }
+}
 
 const Stack = createStackNavigator<ScreenParams>()
 
@@ -46,11 +52,18 @@ const MainNavigator: FunctionComponent = () => {
             />
           </>
         ) : (
-          <Stack.Screen
-            name={Screens.SignIn}
-            component={SignIn}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name={Screens.RequestPin}
+              component={RequestPin}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={Screens.EnterPin}
+              component={EnterPin}
+              options={{ headerShown: false }}
+            />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

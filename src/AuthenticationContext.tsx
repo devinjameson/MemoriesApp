@@ -12,17 +12,39 @@ export const AuthenticationContext = createContext<
 >(undefined)
 
 export interface AuthenticationContextState {
-  authenticationToken: string
-  signIn: (phoneNumber: string) => void
+  authenticationToken: string | null
+  authenticate: (phoneNumber: string, pin: string) => void
+  createMemory: (
+    description: string,
+    imagesData: Api.ImageData[],
+  ) => Promise<Api.Memory[] | void>
+  fetchMemories: () => Promise<Api.Memory[] | void>
 }
 
 export const AuthenticationProvider: FunctionComponent = ({ children }) => {
-  const [authenticationToken, setAuthenticationToken] = useState<string>("")
+  const [authenticationToken, setAuthenticationToken] = useState<string | null>(
+    null,
+  )
 
-  const signIn = async (phoneNumber: string) => {
-    const result = await Api.signIn(phoneNumber)
+  const authenticate = async (phoneNumber: string, pin: string) => {
+    const result = await Api.authenticate(phoneNumber, pin)
     if (result.kind === "success") {
-      setAuthenticationToken(result.authentication_token)
+      setAuthenticationToken(result.authenticationToken)
+    }
+  }
+
+  const fetchMemories = async () => {
+    if (authenticationToken) {
+      Api.fetchMemories(authenticationToken)
+    }
+  }
+
+  const createMemory = async (
+    description: string,
+    imagesData: Api.ImageData[],
+  ) => {
+    if (authenticationToken) {
+      Api.createMemory(description, imagesData, authenticationToken)
     }
   }
 
@@ -30,7 +52,9 @@ export const AuthenticationProvider: FunctionComponent = ({ children }) => {
     <AuthenticationContext.Provider
       value={{
         authenticationToken,
-        signIn,
+        authenticate,
+        createMemory,
+        fetchMemories,
       }}
     >
       {children}

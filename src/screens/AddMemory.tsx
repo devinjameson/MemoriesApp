@@ -10,10 +10,11 @@ import { useNavigation } from "@react-navigation/native"
 import ImagePicker from "react-native-image-picker"
 import { SvgXml } from "react-native-svg"
 
-import { createMemory, ImageData } from "../api"
+import { ImageData } from "../api"
 
 import { Icons } from "../assets/svg"
 import { Colors, Sizing, Buttons, Typography, Outlines } from "../styles"
+import { useAuthenticationContext } from "../AuthenticationContext"
 
 const pickerOptions = {
   title: "add a photo",
@@ -27,6 +28,7 @@ const pickerOptions = {
 
 const AddMemory: FunctionComponent = () => {
   const navigation = useNavigation()
+  const { createMemory } = useAuthenticationContext()
   const [description, setDescription] = useState<string>("")
   const [imagesData, setImagesData] = useState<ImageData[]>([])
 

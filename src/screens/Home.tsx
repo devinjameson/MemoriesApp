@@ -16,14 +16,16 @@ import {
 import { useNavigation, useFocusEffect } from "@react-navigation/native"
 import { SvgXml } from "react-native-svg"
 
-import { fetchMemories, Memory } from "../api"
+import { Memory } from "../api"
 import { Screens } from "../navigation"
 
 import { Icons } from "../assets/svg"
 import { Colors, Sizing, Typography, Buttons, Outlines } from "../styles"
+import { useAuthenticationContext } from "../AuthenticationContext"
 
 const Home: FunctionComponent = () => {
   const [memories, setMemories] = useState<Memory[]>([])
+  const { fetchMemories } = useAuthenticationContext()
   const navigation = useNavigation()
 
   const handleOnPressAddMemory = () => {
