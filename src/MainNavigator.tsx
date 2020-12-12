@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from "react"
+import React, { FunctionComponent } from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import {
   createStackNavigator,
@@ -9,7 +9,7 @@ import Home from "./screens/Home"
 import AddMemory from "./screens/AddMemory"
 import RequestPin from "./screens/RequestPin"
 import EnterPin from "./screens/EnterPin"
-import { Screen, Screens } from "./navigation"
+import { Screens } from "./navigation"
 import { applyHeaderRightBack } from "./navigation/HeaderRightBack"
 
 import { Colors } from "./styles"

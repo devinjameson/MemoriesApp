@@ -10,9 +10,11 @@
     "prettier": "prettier \"src/**/*.+(ts|tsx|json)\"",
     "format": "yarn prettier --write",
     "lint": "eslint ./",
-    "validate": "yarn prettier --list-different && yarn tsc && yarn lint"
+    "validate": "yarn prettier --list-different && yarn tsc && yarn lint",
+    "nuke": "rm -rf node_modules && yarn cache clean && watchman watch-del-all && rm -rf /tmp/metro-bundler-cache-* && rm -rf /tmp/haste-map-react-native-packager-*"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.4",
     "@react-navigation/stack": "^5.9.1",
