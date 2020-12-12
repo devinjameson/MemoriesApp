@@ -52,7 +52,7 @@ export const AuthenticationProvider: FunctionComponent<AuthenticationProviderPro
 
   const fetchMemories = async () => {
     if (authenticationToken) {
-      Api.fetchMemories(authenticationToken)
+      return Api.fetchMemories(authenticationToken)
     }
   }
 
@@ -61,7 +61,7 @@ export const AuthenticationProvider: FunctionComponent<AuthenticationProviderPro
     imagesData: Api.ImageData[],
   ) => {
     if (authenticationToken) {
-      Api.createMemory(description, imagesData, authenticationToken)
+      return Api.createMemory(description, imagesData, authenticationToken)
     }
   }
 
